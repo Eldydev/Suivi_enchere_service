@@ -1,0 +1,6 @@
+.ConfirmPopup {
+    display: none;
+    border: solid 2px grey;
+    position: absolute;
+    z-index: 0;
+}

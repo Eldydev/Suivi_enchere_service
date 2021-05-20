@@ -1,0 +1,48 @@
+import React, { useState } from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+
+import './App.css';
+import Login from './components/Login/Login.js';
+import Dashboard from './components/Dashboard/Dashboard.js';
+import Preferences from './components/Preferences/Preferences.js';
+import Contact from './components/Contact/Contact.js';
+import ViewContactDetails from './components/Contact/ViewContactDetails.js'
+import Mail from './components/Mail/Mail.js'
+import useToken from './useToken.js';
+
+function App() {
+    const { token, setToken } = useToken();
+
+  if(!token) {
+    return <Login setToken={setToken} />
+  }
+  
+  return (
+    <div className="wrapper">
+    <h1>Application</h1>
+    <BrowserRouter>
+      <Switch>
+        <Route path="/dashboard">
+          <Dashboard />
+        </Route>
+        <Route path="/preferences">
+          <Preferences />
+        </Route>
+        <Route path="/contact">
+          <Contact />
+        </Route>
+        <Route path="/mail">
+          <Mail />
+        </Route>
+        <Route
+          exact
+          path="/view-contact-details/:id"
+          component={ViewContactDetails}
+        />
+      </Switch>
+    </BrowserRouter>
+  </div>
+  );
+}
+
+export default App;
