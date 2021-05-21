@@ -2,6 +2,5 @@
    Options -MultiViews
    RewriteEngine On
    RewriteCond %{REQUEST_FILENAME} !-f
-   RewriteCond %{REQUEST_URI} ^/$
    RewriteRule ^ index.html [QSA,L]
 </IfModule>

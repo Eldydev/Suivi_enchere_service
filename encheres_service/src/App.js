@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
 import './App.css';
 import Login from './components/Login/Login.js';
@@ -16,14 +16,18 @@ function App() {
   if(!token) {
     return <Login setToken={setToken} />
   }
+
+  if (token){
+    <Redirect to={{pathname: "/contact"}} />
+  }
   
   return (
     <div className="wrapper">
     <h1>Application</h1>
     <BrowserRouter>
       <Switch>
-        <Route path="/">
-          <Contact />
+      <Route exact path="/">
+          <Dashboard />
         </Route>
         <Route path="/dashboard">
           <Dashboard />
