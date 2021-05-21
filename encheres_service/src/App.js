@@ -22,6 +22,9 @@ function App() {
     <h1>Application</h1>
     <BrowserRouter>
       <Switch>
+        <Route path="/">
+          <Contact />
+        </Route>
         <Route path="/dashboard">
           <Dashboard />
         </Route>

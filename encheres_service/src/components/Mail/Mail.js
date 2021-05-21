@@ -33,7 +33,7 @@ SendMail(){
             subject: objet,
             text: text})
     };
-    fetch('http://localhost:8080/v1/text-mail', requestOptions)
+    fetch('//https://api.suivi-encheres-services.fr/v1/text-mail', requestOptions)
     .then (console.log('body: ',requestOptions))
         .then(response => response.json())
         .then(data => console.log(data))

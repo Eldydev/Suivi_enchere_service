@@ -28,8 +28,8 @@ class Contact extends Component {
     }
 
     componentDidMount() {
-
-        fetch('http://localhost:8080/contact')
+        //https://api.suivi-encheres-services.fr/
+        fetch('//https://api.suivi-encheres-services.fr/contact')
             .then(res => res.json())
 
             .catch(error => console.error('Error: ', error))
