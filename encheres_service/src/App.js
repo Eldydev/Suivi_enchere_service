@@ -16,10 +16,6 @@ function App() {
   if(!token) {
     return <Login setToken={setToken} />
   }
-
-  if (token){
-    <Redirect to={{pathname: "/contact"}} />
-  }
   
   return (
     <div className="wrapper">
