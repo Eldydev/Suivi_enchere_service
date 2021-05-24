@@ -57,7 +57,7 @@ class Auth {
     this.profile = null;
     this.expiresAt = null;
     this.auth0.logout({
-        returnTo: 'http://localhost:3000',
+        returnTo: 'https://suivi-encheres-services.fr/',
         clientID: 'AlApRxPDKxfyOsaeAopXCTNk513fKZfY',
     });
   }
