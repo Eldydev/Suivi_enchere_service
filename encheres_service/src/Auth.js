@@ -7,7 +7,7 @@ class Auth {
       domain: 'dev-osr60n63.eu.auth0.com',
       audience: 'https://dev-osr60n63.eu.auth0.com/userinfo',
       clientID: 'AlApRxPDKxfyOsaeAopXCTNk513fKZfY',
-      redirectUri: 'http://localhost:3000/callback',
+      redirectUri: 'https://api.suivi-encheres-services.fr/callback',
       responseType: 'id_token',
       scope: 'openid profile'
     });
