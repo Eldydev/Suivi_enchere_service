@@ -8,7 +8,7 @@ import Logo from "../../images/1.png";
 
 
 async function loginUser(credentials) {
-  return fetch('https://api.suivi-encheres-services.fr/login', {
+  return fetch('http://localhost:8080/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

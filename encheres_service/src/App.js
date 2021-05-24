@@ -8,23 +8,18 @@ import Preferences from './components/Preferences/Preferences.js';
 import Contact from './components/Contact/Contact.js';
 import ViewContactDetails from './components/Contact/ViewContactDetails.js'
 import Mail from './components/Mail/Mail.js'
-import useToken from './useToken.js';
+import Callback from './Callback';
+import Home from './Home.js';
 
 function App() {
-    const { token, setToken } = useToken();
 
-  if(!token) {
-    return <Login setToken={setToken} />
-  }
-  
   return (
-    <div className="wrapper">
+    <div className="App">
     <h1>Application</h1>
     <BrowserRouter>
       <Switch>
-      <Route exact path="/">
-          <Dashboard />
-        </Route>
+        <Route exact path='/' component={Home} exact />
+        <Route exact path='/callback' component={Callback} exact /> 
         <Route path="/dashboard">
           <Dashboard />
         </Route>

@@ -1,7 +1,12 @@
 import React from 'react';
+import NavBar from '../Navigation/NavBar.js';
 
 export default function Dashboard() {
   return(
-    <h2>Dashboard</h2>
+    <div>
+      <h2>Dashboard</h2>
+      <NavBar />
+    </div>
+
   );
 }
