@@ -58,7 +58,7 @@ route.post('/text-mail', (req, res) => {
         res.status(200).send({ message: "Mail send", message_id: info.messageId });
     });
 });
-
+//test
 app.use('/suivilaposte', (req, res) => {
   console.log('raq : ', req.query)
   var code = req.query
