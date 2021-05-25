@@ -10,10 +10,6 @@ class Home extends Component {
             auth0Client.signIn();
         }
     }
-    signOut = () => {
-        auth0Client.signOut();
-        this.props.history.replace('/');
-    }
     render() {
 
         return (
@@ -25,7 +21,6 @@ class Home extends Component {
                         <div>
                             <label className="mr-2 text-white">{auth0Client.getProfile().name}</label>
                             <br />
-                            <button className="btn btn-dark" onClick={() => { this.signOut() }}>Sign Out</button>
                         </div>
                     }
 

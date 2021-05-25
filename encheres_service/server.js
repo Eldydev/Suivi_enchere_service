@@ -2,12 +2,14 @@
   const cors = require('cors');  
   const bodyParser = require('body-parser');
   const nodemailer = require('nodemailer');
+  const request = require('request');
   
   
   const app = express();
   app.use(cors())
   app.options('*', cors())
   var mysql = require('mysql');
+const { json } = require('body-parser');
 
   var connection = mysql.createConnection({
     host     : 'localhost',
@@ -55,6 +57,28 @@ route.post('/text-mail', (req, res) => {
         }
         res.status(200).send({ message: "Mail send", message_id: info.messageId });
     });
+});
+
+app.use('/suivilaposte', (req, res) => {
+  console.log('raq : ', req.query)
+  var code = req.query
+  console.log('code :', code.code)
+
+  const options = {
+    url: 'https://api.laposte.fr/suivi/v2/idships/' + code.code,
+    method: 'GET',
+    headers: {
+        'Accept': 'application/json',
+        'X-Okapi-Key': 'nKCPaSn2xQgd1AAM0n27XSKSekDnxtcoTTj9/UTIffzRtWuiufGDkZqiyGks09zD'
+    }
+};
+
+request(options, function(err, response, body) {
+  var body = JSON.parse(body)
+  res.send({
+    body: body
+  });
+});
 });
 
 app.use('/login', (req, res) => {

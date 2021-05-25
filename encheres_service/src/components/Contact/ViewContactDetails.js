@@ -140,7 +140,6 @@ class ViewContactDetails extends Component {
                 <option value="Expédié">Expédié</option>
               </select>
         </div>
-        <SearchBarLP />
         <Mail 
           mail={state.users.Email}
           object = {this.state.object}

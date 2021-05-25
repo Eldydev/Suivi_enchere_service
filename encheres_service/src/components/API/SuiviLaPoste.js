@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 import { useLocation, Link } from "react-router-dom";
+import NavBar from '../Navigation/NavBar.js';
 
 import './SuiviLaPoste.css';
 
@@ -9,7 +10,8 @@ class SearchBarLP extends Component {
     constructor() {
       super();
       this.state = {
-          code: ""
+          code: "",
+          data: []
       };
     }
 
@@ -17,44 +19,85 @@ class SearchBarLP extends Component {
         this.setState({code: code})   
     }
 
-    SearchCode(code) {
-        const headers = { 
-            'Accept': 'application/json',
-            'X-Okapi-Key': '3JjphFmg4VUo72z5JrQI8m0AIp00nNHXmbKTusLQDuHiaDt4MxlbSKojOyywXlBM',
-            /*µAccess-Control-Allow-Origin: '*',*/
-    
-    }
-        console.log("code :", this.state.code)
-        fetch('https://api.laposte.fr/suivi/v2/idships/1A00915820380', {headers} )
+   async SearchCode(code) {
+
+        console.log("code :", code)
+        await fetch('https://api.suivi-encheres-services.fr/suivilaposte/?code=' + code)
         .then(res => res.json())
 
         .catch(error => console.error('Error: ', error))
 
         .then(response => {
             console.log('Success: ', response)
+            this.setState({data: response})
         });
+
+        this.MapData()
     }
 
-    test() {
+    MapData(){
+      //6T11111111110
+      console.log('data : ', this.state.data)
+      if (this.state.data.length !== 0) {
+        var data = this.state.data.body.shipment
+        const event = data.event
+        const timeline = data.timeline
+        var delivery = ""
+        var recup = ""
+        var i = ""
+        console.log(data)
+        if (data.isFinal == true){
+          var delivery = "oui"
+        }
+        else {
+          var delivery = "non"
+        }
 
-        console.log('test fucntion')
+        if (data.contextData.removalPoint.type.isPickUp == true){
+          var recup = "oui"
+        }
+        else {
+          var recup = "non"
+        }
 
-        axios.get("https://api.laposte.fr/suivi/v2/idships/1A00915820380", { headers: {
-            'Accept': 'application/json',
-            'X-Okapi-Key': '3JjphFmg4VUo72z5JrQI8m0AIp00nNHXmbKTusLQDuHiaDt4MxlbSKojOyywXlBM'
-
-        }})
-  .then((res) => {
-    console.log(res)
-  })
-  .catch((error) => {
-    console.log(error)
-  })
+        for (i=0; i< timeline.length; i++){
+          console.log(" i : ", i)
+          console.log("fff :", timeline[i].status)
+          if(timeline[i].status == true){
+            var time = timeline[i].shortLabel
+            console.log('yesy :', time)
+          }
+        }
+        return(
+          <div>
+            <p>Numero Suivi : {data.idShip}</p>
+            <p>Type : {data.product}</p>
+            <p>livré : {delivery}</p>
+            <p>Status : {time}</p>
+            <p>le : {data.deliveryDate}</p>
+            <p>à : {data.contextData.removalPoint.type} , {data.contextData.removalPoint.name} </p>
+            <p>recupéré : {recup}</p>
+            <p>hsitorique : </p>
+            <div className="" >
+                            {event.map((event, i) => {
+                                return (
+                                    <div className='' key={i}>
+                                        <p>date : {event.date}</p>
+                                        <p>commentaire : {event.label}</p>
+                                    </div>
+                                )
+                            })}
+                        </div>
+          </div>
+        )
+      }
+      
     }
 
     render() {
       return (
         <div>
+          <NavBar />
             <div>
                 <input 
                     placeholder={"code de suivi"}
@@ -63,6 +106,9 @@ class SearchBarLP extends Component {
             </div>
             <div>
                 <button onClick={(e) => this.SearchCode(this.state.code)}>Search</button>
+            </div>
+            <div>
+            {this.MapData()}
             </div>
         </div>
       );

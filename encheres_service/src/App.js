@@ -8,6 +8,7 @@ import Preferences from './components/Preferences/Preferences.js';
 import Contact from './components/Contact/Contact.js';
 import ViewContactDetails from './components/Contact/ViewContactDetails.js'
 import Mail from './components/Mail/Mail.js'
+import SearchBarLP from './components/API/SuiviLaPoste.js'
 import Callback from './Callback';
 import Home from './Home.js';
 
@@ -31,6 +32,9 @@ function App() {
         </Route>
         <Route path="/mail">
           <Mail />
+        </Route>
+        <Route path="/suivicoli">
+          <SearchBarLP />
         </Route>
         <Route
           exact
