@@ -53,12 +53,15 @@ class SearchBarLP extends Component {
           var delivery = "non"
         }
 
-        if (data.contextData.removalPoint.type.isPickUp == true){
-          var recup = "oui"
-        }
-        else {
-          var recup = "non"
-        }
+        /*if(data.contextData.removalPoint){
+          if (data.contextData.removalPoint.type.isPickUp == true){
+            var recup = "oui"
+          }
+          else {
+            var recup = "non"
+          }
+        }*/
+
 
         for (i=0; i< timeline.length; i++){
           console.log(" i : ", i)
@@ -75,7 +78,6 @@ class SearchBarLP extends Component {
             <p>livré : {delivery}</p>
             <p>Status : {time}</p>
             <p>le : {data.deliveryDate}</p>
-            <p>à : {data.contextData.removalPoint.type} , {data.contextData.removalPoint.name} </p>
             <p>recupéré : {recup}</p>
             <p>hsitorique : </p>
             <div className="" >

@@ -20,7 +20,6 @@ class SelectStatus extends Component {
             <select  onChange={(e) => this.ChangeStatus(e.target.value)}>
                 <option value="payé_MDV">payé MDV</option>
                 <option value="récupéré">récupéré</option>
-                <option value="En_cour_de_traitement">En cours de traitement</option>
                 <option value="Expédié">Expédié</option>
               </select>
         </div>

@@ -4,6 +4,7 @@ import { useLocation, Link } from "react-router-dom";
 import NavBar from "../Navigation/NavBar.js"
 import SearchBarLP from "../API/SuiviLaPoste.js"
 import Mail from "../Mail/Mail.js"
+import Mdvlist from '../MDV/mdv.js'
 
 class ViewContactDetails extends Component {
   constructor() {
@@ -11,19 +12,26 @@ class ViewContactDetails extends Component {
     this.state = {
       user : [],
       object: '',
-      text: ''
+      text: '',
+      mdv: []
     };
   }
 
-  ChangeStatus(value, name){
+  handleMdv = (MdvValue) => {
+    console.log('mdvchoose :', MdvValue)
+    this.setState({mdv: MdvValue});
+}
+
+  ChangeStatus(value, name, mdv){
+    console.log('mdv :', mdv)
     console.log('status :', value)
 
     var txt = ""
     if(value == 'payé_MDV'){
       var txt = "Bonjour Mr " + name + "," + 
         "\nNous vous remercions pour votre paiement et votre confiance." + 
-        "\nNous allons nous rapprocher de la Maison xxxx et organiser le retrait du bordereau XXXX en date du XXXX concerné par votre demande." + 
-        "\n(nous vous rappelons que nous ne pouvons procéder au retrait  qu'à la condition de la réception de votre paiement par l'hôtel des ventes)," +
+        "\nNous allons nous rapprocher de la Maison " + mdv.nom + " (" + mdv.designation + ") à " + mdv.ville + " et organiser le retrait du bordereau XXXX en date du XXXX concerné par votre demande." + 
+        "\n(nous vous rappelons que nous ne pouvons procéder au retrait  qu'à la condition de la réception de votre paiement par l'hôtel des ventes)." +
         "\nNous vous tiendrons informé du suivi de votre demande.Bien cordialement," + 
         "\nSignature ES"
       var object = "status updated to payé MDV"
@@ -31,16 +39,11 @@ class ViewContactDetails extends Component {
 
     if(value == 'récupéré'){
       var txt = "Bonjour Mr " + name + "," + 
-        "\nNous avons bien récupéré votre lot correspondant au Bordereau n°xxxx auprès de la maison de vente xxxx," + 
+        "\nNous avons bien récupéré votre lot correspondant au Bordereau n°xxxx auprès de la maison de vente " + mdv.nom + " (" + mdv.designation + ") à " + mdv.ville + 
         "\nNous allons nous procéder à l'emballage de votre bien avec attention et  vous tiendrons informé de son expédition ou sa livraison." + 
         "\nBien cordialement," + 
         "\nSignature ES"
       var object = "status updated to récupéré"
-    }
-
-    if(value == 'En_cour_de_traitement'){
-      var txt = 'traitement txt'
-      var object = "status updated to en cour de traitement"
     }
 
     if(value == 'Expédié'){
@@ -48,7 +51,7 @@ class ViewContactDetails extends Component {
         "\nNous vous confirmons l'expédition de votre / vos lots du bordereau xxxx " + 
         "sous le numéro de suivi transporteur Colissimo La Poste suivant :  N° de suivi =  8A00054163416" + 
         "\nVous pouvez suivre son acheminement sous le numéro de suivi suivant " + 
-        "via le lien https://www.laposte.fr/outils/suivre-vos-envois?code=8A00054163416 (entête colonne NOSUIVI)" + 
+        "via le lien https://www.laposte.fr/outils/suivre-vos-envois " + 
         "\nNous vous en souhaitons bonne réception," + 
         "\nBien cordialement,Signature ES"
       var object = "status updated to expédié"
@@ -58,6 +61,7 @@ class ViewContactDetails extends Component {
     this.setState({object: object})
     console.log(object)
     console.log(txt)
+    this.refs.mail.Confirm(object, txt);
     
   }
 
@@ -132,15 +136,19 @@ class ViewContactDetails extends Component {
           <strong>Contact.date:</strong> {state.users.Date}{" "}
         </div>
         <div>
-            <select  onChange={(e) => this.ChangeStatus(e.target.value, state.users.Last_Name)}>
+          <Mdvlist onSelectMdv={this.handleMdv}/>
+        </div>
+        <div>
+            <select  onChange={(e) => this.ChangeStatus(e.target.value, state.users.Last_Name, this.state.mdv)}>
                 <option value="dafault">choississez un status</option>
                 <option value="payé_MDV">payé MDV</option>
                 <option value="récupéré">récupéré</option>
-                <option value="En_cour_de_traitement">En cours de traitement</option>
                 <option value="Expédié">Expédié</option>
               </select>
         </div>
+
         <Mail 
+          ref="mail"
           mail={state.users.Email}
           object = {this.state.object}
           text = {this.state.text}

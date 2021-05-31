@@ -9,6 +9,7 @@ import Contact from './components/Contact/Contact.js';
 import ViewContactDetails from './components/Contact/ViewContactDetails.js'
 import Mail from './components/Mail/Mail.js'
 import SearchBarLP from './components/API/SuiviLaPoste.js'
+import Mdvlist from './components/MDV/mdv.js'
 import Callback from './Callback';
 import Home from './Home.js';
 
@@ -35,6 +36,9 @@ function App() {
         </Route>
         <Route path="/suivicoli">
           <SearchBarLP />
+        </Route>
+        <Route path="/mdvlist">
+          <Mdvlist />
         </Route>
         <Route
           exact

@@ -48,12 +48,7 @@ const PaginacionTabla = ({ itemsperpage, nocolumns, items, pagesspan }) => {
                 <td>{contact.Last_Name}</td>
                 <td>{contact.Email}</td>
                 <td>{contact.Phone}</td>
-                <td>
-                    <select>
-                        <option value="attente_paiement">attente paiement</option>
-                        <option value="payé">payé</option>
-                    </select>
-                </td>
+                <td>{contact.avancement_cmd}</td>
                 <td>
                 <Link
                   to={{

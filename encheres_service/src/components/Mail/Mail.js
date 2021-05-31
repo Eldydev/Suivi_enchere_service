@@ -38,7 +38,12 @@ SendMail(){
         .then(response => response.json())
         .then(data => console.log(data))
         document.querySelector(".ConfirmPopup").style.display = "none"
+        this.UpdateUserStatus()
 }
+
+/*UpdateUserStatus(){
+  console.log()
+}*/
 
 Cancel(){
   document.querySelector(".ConfirmPopup").style.display = "none"
@@ -47,10 +52,6 @@ Cancel(){
     render() {
       return (
         <div>
-          <div>
-            <p>{this.props.mail}</p>
-              <button onClick={(e) => this.Confirm(this.props.object, this.props.text)}>Mail</button>
-          </div>
           <div className="ConfirmPopup">
             <p>etes vous sûr de vouloir envoyer le mail ?</p>
             <p>à {this.props.mail}</p>

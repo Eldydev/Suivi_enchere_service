@@ -28,7 +28,6 @@ class Contact extends Component {
     }
 
     componentDidMount() {
-        //https://api.suivi-encheres-services.fr/
         fetch('https://api.suivi-encheres-services.fr/contact')
             .then(res => res.json())
 

@@ -12,9 +12,9 @@
 const { json } = require('body-parser');
 
   var connection = mysql.createConnection({
-    host     : 'localhost',
-    user     : 'root',
-    password : 'root',
+    host     : 'localhost3306', //localhost:3306
+    user     : 'SuiviHS', //SuiviHS
+    password : 'sDc4t*33', //sDc4t*33
     database : 'ContactES2'
   });
 
@@ -98,6 +98,41 @@ app.use('/login', (req, res) => {
     });
     console.log(rows)
   });
+
+  connection.query('select * from MDV', function(err, rows, fields) {
+    if (err) throw err;
+    app.use('/mdvlist', (req, res) => {
+      res.send({
+        rows: rows
+      });
+    });
+    console.log(rows)
+  });
+
+  /*app.put('/users/:id', (request, response) => {
+    const id = request.params.id;
+
+
+});*/
+
+/*route.post('/text-mail', (req, res) => {
+  const {to, subject, text } = req.body;
+  console.log('body: ',req.body);
+  const data = {
+      from: 'youremail@gmail.com',
+      to: to,
+      subject: subject,
+      text: text,
+      html: text,
+  };
+
+  connection.query('UPDATE mytable SET avancement_cmd WHERE id = ?', [request.body, id], (error, result) => {
+    if (error) throw error;
+
+    response.send('User updated successfully.');
+});
+  
+});*/
 
   connection.end();
   
