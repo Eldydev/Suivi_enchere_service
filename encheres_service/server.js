@@ -12,9 +12,9 @@
 const { json } = require('body-parser');
 
   var connection = mysql.createConnection({
-    host     : 'localhost3306', //localhost:3306
-    user     : 'SuiviHS', //SuiviHS
-    password : 'sDc4t*33', //sDc4t*33
+    host     : 'localhost', //localhost:3306
+    user     : 'root', //SuiviHS
+    password : 'root', //sDc4t*33
     database : 'ContactES2'
   });
 

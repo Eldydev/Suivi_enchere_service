@@ -41,9 +41,9 @@ SendMail(){
         this.UpdateUserStatus()
 }
 
-/*UpdateUserStatus(){
+UpdateUserStatus(){
   console.log()
-}*/
+}
 
 Cancel(){
   document.querySelector(".ConfirmPopup").style.display = "none"
