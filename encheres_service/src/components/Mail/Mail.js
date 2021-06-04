@@ -6,7 +6,7 @@ class Mail extends Component {
       super();
       this.state = {
           mail: "",
-          to:'aurelien@spatiality.fr',
+          to:'edouard@spatiality.fr',
           subject:'',
           text:''
       };
