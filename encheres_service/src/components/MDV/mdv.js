@@ -28,7 +28,8 @@ class Mdvlist extends Component {
   }
 
   handleMdvChange = (value) => {
-    var mdv = this.state.MDVArray[value];
+    console.log('mdv.js : ', value)
+    var mdv = this.state.MDVArray[value -1];
     this.props.onSelectMdv(mdv);            
 }
 

@@ -28,32 +28,32 @@ class ViewContactDetails extends Component {
 
     var txt = ""
     if(value == 'payé_MDV'){
-      var txt = "Bonjour Mr " + name + "," + 
-        "\nNous vous remercions pour votre paiement et votre confiance." + 
-        "\nNous allons nous rapprocher de la Maison " + mdv.nom + " (" + mdv.designation + ") à " + mdv.ville + " et organiser le retrait du bordereau XXXX en date du XXXX concerné par votre demande." + 
-        "\n(nous vous rappelons que nous ne pouvons procéder au retrait  qu'à la condition de la réception de votre paiement par l'hôtel des ventes)." +
-        "\nNous vous tiendrons informé du suivi de votre demande.Bien cordialement," + 
-        "\nSignature ES"
+      var txt = "Bonjour Mme / Mr " + name + "," + 
+        "\n\nNous vous remercions pour votre paiement et votre confiance." + 
+        "\n\nNous allons nous rapprocher de la Maison " + mdv.nom + " (" + mdv.designation + ") à " + mdv.ville + " et organiser le retrait du bordereau XXXX en date du XXXX concerné par votre demande." + 
+        "\n\n(nous vous rappelons que nous ne pouvons procéder au retrait  qu'à la condition de la réception de votre paiement par l'hôtel des ventes)." +
+        "\n\nNous vous tiendrons informé du suivi de votre demande.Bien cordialement," + 
+        "\n\nSignature ES"
       var object = "status updated to payé MDV"
     }
 
     if(value == 'récupéré'){
-      var txt = "Bonjour Mr " + name + "," + 
-        "\nNous avons bien récupéré votre lot correspondant au Bordereau n°xxxx auprès de la maison de vente " + mdv.nom + " (" + mdv.designation + ") à " + mdv.ville + 
-        "\nNous allons nous procéder à l'emballage de votre bien avec attention et  vous tiendrons informé de son expédition ou sa livraison." + 
-        "\nBien cordialement," + 
-        "\nSignature ES"
+      var txt = "Bonjour Mme / Mr " + name + "," + 
+        "\n\nNous avons bien récupéré votre lot correspondant au Bordereau n°xxxx auprès de la maison de vente " + mdv.nom + " (" + mdv.designation + ") à " + mdv.ville + 
+        "\n\nNous allons nous procéder à l'emballage de votre bien avec attention et  vous tiendrons informé de son expédition ou sa livraison." + 
+        "\n\nBien cordialement," + 
+        "\n\nSignature ES"
       var object = "status updated to récupéré"
     }
 
     if(value == 'Expédié'){
-      var txt = "Bonjour Mr, " + name + "," + 
-        "\nNous vous confirmons l'expédition de votre / vos lots du bordereau xxxx " + 
+      var txt = "Bonjour Mme / Mr, " + name + "," + 
+        "\n\nNous vous confirmons l'expédition de votre / vos lots du bordereau xxxx " + 
         "sous le numéro de suivi transporteur Colissimo La Poste suivant :  N° de suivi =  8A00054163416" + 
-        "\nVous pouvez suivre son acheminement sous le numéro de suivi suivant " + 
+        "\n\nVous pouvez suivre son acheminement sous le numéro de suivi suivant " + 
         "via le lien https://www.laposte.fr/outils/suivre-vos-envois " + 
-        "\nNous vous en souhaitons bonne réception," + 
-        "\nBien cordialement,Signature ES"
+        "\n\nNous vous en souhaitons bonne réception," + 
+        "\n\nBien cordialement,Signature ES"
       var object = "status updated to expédié"
     }
 

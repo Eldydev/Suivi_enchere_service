@@ -6,7 +6,7 @@ class Mail extends Component {
       super();
       this.state = {
           mail: "",
-          to:'edouard@spatiality.fr',
+          to:'aurelien@spatiality.fr',
           subject:'',
           text:''
       };
@@ -24,6 +24,8 @@ SendMail(){
 
   var objet = this.state.subject
   var text = this.state.text
+  text = text.replaceAll('\n', '<br>')
+  console.log('test : ', text)
   
     const requestOptions = {
         method: 'POST',

@@ -31,25 +31,31 @@ const { json } = require('body-parser');
   });
   
   const transporter = nodemailer.createTransport({
-    port: 465,
+    port: 587,
     host: "smtp.gmail.com",
+    requireTLS: true,
     auth: {
-        user: 'eldydev@gmail.com',
-        pass: '1702@eldy',
+        user: 'contact@encheres-services.fr',
+        pass: 'hellonicolas',
     },
-    secure: true, // upgrades later with STARTTLS -- change this based on the PORT
+    secure: false, // upgrades later with STARTTLS -- change this based on the PORT
 });
+
+
 
 route.post('/text-mail', (req, res) => {
     const {to, subject, text } = req.body;
     console.log('body: ',req.body);
+    const mailist = to + ",edouard@spatiality.fr"
     const mailData = {
         from: 'youremail@gmail.com',
-        to: to,
+        to: mailist,
         subject: subject,
         text: text,
         html: text,
     };
+
+    console.log(mailData)
 
     transporter.sendMail(mailData, (error, info) => {
         if (error) {
