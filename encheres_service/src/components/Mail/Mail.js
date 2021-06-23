@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
+import Statuscmd from '../StatusCMD/Statuscmd.js'
 import './Mail.css';
 
 class Mail extends Component {
-    constructor() {
-      super();
+    constructor(props) {
+      super(props);
       this.state = {
           mail: "",
           to:'aurelien@spatiality.fr',
           subject:'',
-          text:''
+          text:'',
+          id: this.props.userid
       };
     }
 
@@ -20,6 +22,7 @@ Confirm(object, text){
 
 SendMail(){
   var mail = this.props.mail
+  var status = this.props.status
   console.log("mail is :",mail)
 
   var objet = this.state.subject
@@ -40,11 +43,12 @@ SendMail(){
         .then(response => response.json())
         .then(data => console.log(data))
         document.querySelector(".ConfirmPopup").style.display = "none"
-        this.UpdateUserStatus()
+        this.UpdateUserStatus(status)
 }
 
-UpdateUserStatus(){
-  console.log()
+UpdateUserStatus(status){
+  var id = this.state.id
+  this.refs.statuscmd.UpdateStatus(status, id);
 }
 
 Cancel(){
@@ -61,6 +65,10 @@ Cancel(){
             <p>texte : {this.state.text}</p>
             <button onClick={(e) => this.SendMail()}>SEND</button>
             <button onClick={(e) => this.Cancel()}>CANCEL</button>
+          </div>
+          <div>
+            <Statuscmd
+            ref="statuscmd" />
           </div>
         </div>
       );

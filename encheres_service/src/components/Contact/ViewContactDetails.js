@@ -5,69 +5,130 @@ import NavBar from "../Navigation/NavBar.js"
 import SearchBarLP from "../API/SuiviLaPoste.js"
 import Mail from "../Mail/Mail.js"
 import Mdvlist from '../MDV/mdv.js'
+import Numsuivi from '../NumSuivi/Numsuivi.js'
+import Statuscmd from '../StatusCMD/Statuscmd.js'
 
 class ViewContactDetails extends Component {
   constructor() {
     super();
     this.state = {
-      user : [],
+      user: [],
       object: '',
       text: '',
-      mdv: []
+      mdv: [],
+      numsuivi: '',
+      status: ''
     };
   }
 
   handleMdv = (MdvValue) => {
     console.log('mdvchoose :', MdvValue)
-    this.setState({mdv: MdvValue});
-}
+    this.setState({ mdv: MdvValue });
+  }
 
-  ChangeStatus(value, name, mdv){
+  ChangeStatus(value, name, mdv, id) {
     console.log('mdv :', mdv)
     console.log('status :', value)
+    this.setState({ status: value })
 
     var txt = ""
-    if(value == 'payé_MDV'){
-      var txt = "Bonjour Mme / Mr " + name + "," + 
-        "\n\nNous vous remercions pour votre paiement et votre confiance." + 
-        "\n\nNous allons nous rapprocher de la Maison " + mdv.nom + " (" + mdv.designation + ") à " + mdv.ville + " et organiser le retrait du bordereau XXXX en date du XXXX concerné par votre demande." + 
-        "\n\n(nous vous rappelons que nous ne pouvons procéder au retrait  qu'à la condition de la réception de votre paiement par l'hôtel des ventes)." +
-        "\n\nNous vous tiendrons informé du suivi de votre demande.Bien cordialement," + 
-        "\n\nSignature ES"
-      var object = "status updated to payé MDV"
+    if (value == 'payé_MDV') {
+      this.settextPmdv(value, name, mdv, id)
     }
 
-    if(value == 'récupéré'){
-      var txt = "Bonjour Mme / Mr " + name + "," + 
-        "\n\nNous avons bien récupéré votre lot correspondant au Bordereau n°xxxx auprès de la maison de vente " + mdv.nom + " (" + mdv.designation + ") à " + mdv.ville + 
-        "\n\nNous allons nous procéder à l'emballage de votre bien avec attention et  vous tiendrons informé de son expédition ou sa livraison." + 
-        "\n\nBien cordialement," + 
-        "\n\nSignature ES"
-      var object = "status updated to récupéré"
+    if (value == 'récupéré') {
+
+      this.settextRec(value, name, mdv, id)
     }
 
-    if(value == 'Expédié'){
-      var txt = "Bonjour Mme / Mr, " + name + "," + 
-        "\n\nNous vous confirmons l'expédition de votre / vos lots du bordereau xxxx " + 
-        "sous le numéro de suivi transporteur Colissimo La Poste suivant :  N° de suivi =  8A00054163416" + 
-        "\n\nVous pouvez suivre son acheminement sous le numéro de suivi suivant " + 
-        "via le lien https://www.laposte.fr/outils/suivre-vos-envois " + 
-        "\n\nNous vous en souhaitons bonne réception," + 
-        "\n\nBien cordialement,Signature ES"
-      var object = "status updated to expédié"
+    if (value == 'Expédié') {
+
+      console.log('state: user :', this.state.user)
+
+
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: id
+        })
+      };
+      fetch('https://api.suivi-encheres-services.fr/v1/get-number', requestOptions)
+        .then(console.log('body: ', requestOptions))
+        .then(res => res.json())
+        .catch(error => console.error('Error: ', error))
+        .then(response => {
+          console.log('Success: ', response)
+          console.log(response.rows[0].Numsuivi)
+          this.setState({ numsuivi: response.rows[0].Numsuivi })
+          this.settextExp(value, name, mdv, id)
+        })
+
     }
 
-    this.setState({text: txt})
-    this.setState({object: object})
+  }
+
+  settextExp(value, name, mdv, id) {
+
+    console.log('numEXP', this.state.numsuivi)
+
+    var txt = "Bonjour Mme / Mr, " + name + "," +
+      "\n\nNous vous confirmons l'expédition de votre / vos lots du bordereau xxxx " +
+      "sous le numéro de suivi transporteur Colissimo La Poste suivant :  N° de suivi = " + this.state.numsuivi +
+      "\n\nVous pouvez suivre son acheminement sous le numéro de suivi suivant " +
+      "via le lien https://www.laposte.fr/outils/suivre-vos-envois " +
+      "\n\nNous vous en souhaitons bonne réception," +
+      "\n\nBien cordialement," +
+      "\n\nSignature ES"
+    var object = "Mise à jour de votre statut de commande à EXPEDIE"
+
+    this.setState({ text: txt })
+    this.setState({ object: object })
     console.log(object)
     console.log(txt)
     this.refs.mail.Confirm(object, txt);
-    
   }
 
+  settextPmdv(value, name, mdv, id) {
+
+    console.log('numPMVD', this.state.numsuivi)
+
+    var txt = "Bonjour Mme / Mr " + name + "," +
+      "\n\nNous vous remercions pour votre paiement et votre confiance." +
+      "\n\nNous allons nous rapprocher de la Maison " + mdv.nom + " (" + mdv.designation + ") à " + mdv.ville + " et organiser le retrait du bordereau XXXX en date du XXXX concerné par votre demande." +
+      "\n\n(nous vous rappelons que nous ne pouvons procéder au retrait  qu'à la condition de la réception de votre paiement par l'hôtel des ventes)." +
+      "\n\nNous vous tiendrons informé du suivi de votre demande.Bien cordialement," +
+      "\n\nSignature ES"
+    var object = "Mise à jour de votre statut de commande à PAYE MDV"
+
+    this.setState({ text: txt })
+    this.setState({ object: object })
+    console.log(object)
+    console.log(txt)
+    this.refs.mail.Confirm(object, txt);
+  }
+
+  settextRec(value, name, mdv, id) {
+
+    var txt = "Bonjour Mme / Mr " + name + "," +
+      "\n\nNous avons bien récupéré votre lot correspondant au Bordereau n°xxxx auprès de la maison de vente " + mdv.nom + " (" + mdv.designation + ") à " + mdv.ville +
+      "\n\nNous allons nous procéder à l'emballage de votre bien avec attention et  vous tiendrons informé de son expédition ou sa livraison." +
+      "\n\nBien cordialement," +
+      "\n\nSignature ES"
+    var object = "Mise à jour de votre statut de commande à RECUPERE"
+
+    this.setState({ text: txt })
+    this.setState({ object: object })
+    console.log(object)
+    console.log(txt)
+    this.refs.mail.Confirm(object, txt);
+  }
+
+
   render() {
-    
+
     const { state } = this.props.location
+
 
     return (
       <div>
@@ -135,26 +196,35 @@ class ViewContactDetails extends Component {
         <div>
           <strong>Contact.date:</strong> {state.users.Date}{" "}
         </div>
-        <div>
-          <Mdvlist onSelectMdv={this.handleMdv}/>
-        </div>
-        <div>
-            <select  onChange={(e) => this.ChangeStatus(e.target.value, state.users.Last_Name, this.state.mdv)}>
-                <option value="dafault">choississez un status</option>
-                <option value="payé_MDV">payé MDV</option>
-                <option value="récupéré">récupéré</option>
-                <option value="Expédié">Expédié</option>
-              </select>
-        </div>
 
-        <Mail 
+        <div>
+          <Mdvlist onSelectMdv={this.handleMdv} />
+        </div>
+        <div>
+          <select onChange={(e) => this.ChangeStatus(e.target.value, state.users.Last_Name, this.state.mdv, state.users.id)}>
+            <option value="dafault">choississez un status</option>
+            <option value="payé_MDV">payé MDV</option>
+            <option value="récupéré">récupéré</option>
+            <option value="Expédié">Expédié</option>
+          </select>
+        </div>
+        <div>
+          <Numsuivi
+            ref="numsuivi"
+            userid={state.users.id}
+            cmd={state.users.avancement_cmd}
+          />
+        </div>
+        <Mail
           ref="mail"
           mail={state.users.Email}
-          object = {this.state.object}
-          text = {this.state.text}
+          object={this.state.object}
+          text={this.state.text}
+          status={this.state.status}
+          userid={state.users.id}
         />
       </div>
-);
+    );
   }
 }
 

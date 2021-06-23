@@ -28,7 +28,7 @@ class Contact extends Component {
     }
 
     componentDidMount() {
-        fetch('https://api.suivi-encheres-services.fr/contact')
+        fetch('https://api.suivi-encheres-services.fr/v1/get-contact')
             .then(res => res.json())
 
             .catch(error => console.error('Error: ', error))
@@ -165,7 +165,7 @@ class Contact extends Component {
                                 <td>Nom</td>
                                 <td>mail</td>
                                 <td>tel</td>
-                                <td>paiement</td>
+                                <td>avancement commande</td>
                             </tr>
                         </thead>
                         <PaginacionTabla
