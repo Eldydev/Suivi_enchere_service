@@ -27,6 +27,9 @@ class Statuscmd extends Component {
             .then(console.log('body: ', requestOptions))
             .then(response => response.json())
             .then(data => console.log(data))
+            .then(
+                document.getElementById('ConfirmStatus').style.display ="block"
+            )
     }
 
     render() {

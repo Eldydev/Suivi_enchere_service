@@ -12,9 +12,9 @@ var mysql = require('mysql');
 const { json } = require('body-parser');
 
 var connection = mysql.createConnection({
-  host: 'localhost:3306', //localhost:3306
+  host: 'localhost', //localhost:3306
   user: 'SuiviHS', //SuiviHS
-  password: 'root', //sDc4t*33
+  password: 'sDc4t*33', //sDc4t*33
   database: 'ContactES2'
 });
 
@@ -155,7 +155,32 @@ route.post('/update-status', (req, res) => {
 });
 
 route.get('/get-contact', (req, res) => {
-  var sql = "select * from mytable";
+  var sql = "select * from mytable ORDER BY Last_Activity_Date DESC";
+  connection.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log(result)
+    res.send({
+      rows: result
+    });
+  });
+});
+
+route.post('/update-mdv', (req, res) => {
+  const { mdv, id } = req.body;
+  console.log('body: ', req.body);
+
+  var sql = "UPDATE mytable SET id_MDV = '" + mdv + "' WHERE id = '" + id + "'";
+  connection.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log(result.affectedRows + " record(s) updated");
+  });
+});
+
+route.post('/get-mdv', (req, res) => {
+  const { id } = req.body;
+  console.log('body: ', req.body);
+
+  var sql = "SELECT id_MDV FROM mytable WHERE id = '" + id + "'";
   connection.query(sql, function (err, result) {
     if (err) throw err;
     console.log(result)

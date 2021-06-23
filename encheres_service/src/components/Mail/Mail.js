@@ -63,8 +63,8 @@ Cancel(){
             <p>à {this.props.mail}</p>
             <p>objet : {this.state.subject}</p>
             <p>texte : {this.state.text}</p>
-            <button onClick={(e) => this.SendMail()}>SEND</button>
-            <button onClick={(e) => this.Cancel()}>CANCEL</button>
+            <button onClick={(e) => this.SendMail()}>ENVOYER</button>
+            <button onClick={(e) => this.Cancel()}>ANNULER</button>
           </div>
           <div>
             <Statuscmd

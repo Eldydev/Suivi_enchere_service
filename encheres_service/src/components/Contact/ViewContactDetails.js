@@ -7,6 +7,7 @@ import Mail from "../Mail/Mail.js"
 import Mdvlist from '../MDV/mdv.js'
 import Numsuivi from '../NumSuivi/Numsuivi.js'
 import Statuscmd from '../StatusCMD/Statuscmd.js'
+import ConfirmStatus from './ConfirmStatus.js';
 
 class ViewContactDetails extends Component {
   constructor() {
@@ -17,8 +18,41 @@ class ViewContactDetails extends Component {
       text: '',
       mdv: [],
       numsuivi: '',
-      status: ''
+      status: '',
+      id_mdv: ''
     };
+  }
+
+  componentDidMount() {
+
+    var loc = this.props.location.state.users.id
+    console.log('loc', loc)
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        id: loc
+      })
+    };
+    fetch('https://api.suivi-encheres-services.fr/v1/get-MDV', requestOptions)
+      .then(console.log('body: ', requestOptions))
+      .then(res => res.json())
+      .catch(error => console.error('Error: ', error))
+      .then(response => {
+        console.log('get-mdv - Success: ', response)
+        var id_mdv = response.rows[0].id_MDV
+        this.displayMDV(id_mdv)
+      })
+
+
+  }
+
+  displayMDV(id) {
+
+    if (id !== '') {
+
+      document.getElementById('MDVlist').style.display = "none"
+    }
   }
 
   handleMdv = (MdvValue) => {
@@ -198,7 +232,9 @@ class ViewContactDetails extends Component {
         </div>
 
         <div>
-          <Mdvlist onSelectMdv={this.handleMdv} />
+          <Mdvlist onSelectMdv={this.handleMdv}
+            ref="mdvlist"
+            userid={state.users.id} />
         </div>
         <div>
           <select onChange={(e) => this.ChangeStatus(e.target.value, state.users.Last_Name, this.state.mdv, state.users.id)}>
@@ -223,6 +259,7 @@ class ViewContactDetails extends Component {
           status={this.state.status}
           userid={state.users.id}
         />
+        <ConfirmStatus />
       </div>
     );
   }

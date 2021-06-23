@@ -48,15 +48,15 @@ const PaginacionTabla = ({ itemsperpage, nocolumns, items, pagesspan }) => {
                 <td>{contact.Last_Name}</td>
                 <td>{contact.Email}</td>
                 <td>{contact.Phone}</td>
-                <td>{contact.avancement_cmd}</td>
-                <td>
+                <td className={contact.avancement_cmd}>{contact.avancement_cmd}</td>
+                <td className="viewbutton">
                 <Link
                   to={{
                     pathname: `/view-contact-details/${contact.id}`,
                     state: { users: contact }
                   }}
                 >
-                  <button>View</button>
+                  <button>Voir le contact</button>
                 </Link>
                 </td>
               </tr>
@@ -65,7 +65,7 @@ const PaginacionTabla = ({ itemsperpage, nocolumns, items, pagesspan }) => {
           {noitems > 0
             ? [
                 <tr key={"pagingrow" + 100}>
-                  <td colSpan={nocolumns} style={{ textAlign: "center" }}>
+                  <td id="pagin" colSpan={nocolumns} style={{ textAlign: "center" }}>
                     <button
                       style={buttonStyles}
                       {...getFastBackButtonProps()}
