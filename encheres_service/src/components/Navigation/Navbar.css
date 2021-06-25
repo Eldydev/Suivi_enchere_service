@@ -1,3 +1,22 @@
 .NavBar {
     display: flex;
 }
+
+.NavBar button {
+    width: 150px;
+    height: 40px;
+    margin: 10px;
+    border: solid 2px black;
+    box-shadow: 10px 5px 5px black;
+    border-radius: 10px;
+}
+
+.NavBar button:hover {
+    background-color: lightblue;
+}
+
+.NavBar button:active{
+    background-color:lightskyblue;
+    box-shadow: 5px 2px 2px black;
+    transform: translateY(4px);
+}

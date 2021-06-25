@@ -25,11 +25,11 @@ class Navbar extends Component {
                     pathname: '/contact'
                   }}
                 >
-                  <button>Contact</button>
+                  <button>CONTACT</button>
                 </Link>
               </div>
               <div>
-                <button className="btn btn-dark" onClick={() => { this.signOut() }}>Sign Out</button>
+                <button className="btn btn-dark" onClick={() => { this.signOut() }}>DECONNEXION</button>
               </div>
               <div>
               <Link
@@ -37,7 +37,7 @@ class Navbar extends Component {
                     pathname: '/suivicoli'
                   }}
                 >
-                  <button>API la Poste</button>
+                  <button>API LA POSTE</button>
                 </Link>
                 </div>
           </div>
