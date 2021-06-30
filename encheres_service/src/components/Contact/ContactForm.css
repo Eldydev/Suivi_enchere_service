@@ -1,0 +1,105 @@
+form {
+    display:flex;
+    justify-content:end;
+    align-items: end;
+    flex-direction: column;
+}
+
+form label {
+    margin-top: 20px;
+    margin-right: 35%;
+}
+
+form p {
+    margin-top: 20px;
+    margin-right: 48%;
+    font-size: 150%;   
+}
+
+input {
+    width: 500px;
+    margin-left: 40px;
+}
+
+#ADL {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    justify-content: end;
+    align-items: flex-end;
+    width: 1200px;
+    display: none;
+}
+
+#ADL label {
+    margin-right: 0px;
+    margin-right: 27%;
+}
+
+#checkboxADL {
+    width: 20px;
+}
+
+#CFB {
+    align-self: center;
+    width: 150px;
+    height: 40px;
+    margin: 10px;
+    border: solid 2px black;
+    box-shadow: 10px 5px 5px black;
+    border-radius: 10px;
+}
+
+#CFB:hover {
+    background-color: lightblue;
+}
+
+#CFB:active{
+    background-color:lightskyblue;
+    box-shadow: 5px 2px 2px black;
+    transform: translateY(4px);
+}
+
+#UCF {
+    display: none;
+    background-color: white;
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    width: 90%;
+    border: solid 2px black;
+    box-shadow: 10px 5px 5px black;
+    border-radius: 10px;
+}
+
+#CFB {
+    align-self: center;
+    width: 150px;
+    height: 40px;
+    margin: 10px;
+    border: solid 2px black;
+    box-shadow: 10px 5px 5px black;
+    border-radius: 10px;
+}
+
+#CUFB {
+    align-self: center;
+    width: 150px;
+    height: 40px;
+    margin: 10px;
+    border: solid 2px black;
+    box-shadow: 10px 5px 5px black;
+    border-radius: 10px;
+}
+
+#CUFB:hover {
+    background-color: lightblue;
+}
+
+#CUFB:active{
+    background-color:lightskyblue;
+    box-shadow: 5px 2px 2px black;
+    transform: translateY(4px);
+}
+
+

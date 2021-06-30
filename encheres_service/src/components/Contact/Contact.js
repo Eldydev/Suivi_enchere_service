@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import SearchBar from './SearchBar.js'
 import ReactPaginate from 'react-paginate';
 import NavBar from '../Navigation/NavBar.js';
+import NewContactButton from '../Navigation/NewContactButton.js';
 import PaginacionTabla from "./Pagination.js";
 import './Contact.css';
 
@@ -13,7 +14,7 @@ class Contact extends Component {
             ContactArray: [],
             ContactArrayFiltered: [],
             input: "",
-            filter: 'FirstName',
+            filter: 'LastName',
             Cmdfilter: '',
             itemsperpage: 20,
             nocolumns: 50,
@@ -82,45 +83,33 @@ class Contact extends Component {
     setKeyword(input) {
 
         var filter = this.state.Cmdfilter
-        console.log('input :', input)
-        console.log('filter :', filter)
-        console.log('contactArray :', this.state.ContactArray)
-        console.log('firstName', this.state.ContactArray.avancement_cmd)
+
         this.setState({ input: input })
         if (filter !== '') {
-            if (this.state.filter == 'FirstName') {
-                console.log('Firstname filterlol')
+            if (this.state.filter == 'email') {
                 this.setState({ input: input })
-                console.log('contactarray4filterFirstNamelol', this.state.ContactArrayFiltered)
                 var ArrayCmdFiltered = this.state.ContactArray.filter(person => person.avancement_cmd.includes(filter));
-                var test = ArrayCmdFiltered.filter(person => person.First_Name.toUpperCase().includes(input.toUpperCase()));
+                var test = ArrayCmdFiltered.filter(person => person.Email.toUpperCase().includes(input.toUpperCase()));
                 this.setState({ ContactArrayFiltered: test })
-                console.log('ArrayFilteredlol :', test)
             }
             if (this.state.filter == 'LastName') {
                 this.setState({ input: input })
-                console.log('Lastname filter')
                 var ArrayCmdFiltered = this.state.ContactArray.filter(person => person.avancement_cmd.includes(filter));
                 var test = ArrayCmdFiltered.filter(person => person.Last_Name.toUpperCase().includes(input.toUpperCase()));
                 this.setState({ ContactArrayFiltered: test })
-                console.log('ArrayFiltered :', test)
             }
         }
         else {
-            if (this.state.filter == 'FirstName') {
-                console.log('Firstname filter')
+            if (this.state.filter == 'email') {
                 this.setState({ input: input })
                 console.log('contactarray4filterFirstName', this.state.ContactArray)
-                var test = this.state.ContactArray.filter(person => person.First_Name.toUpperCase().includes(input.toUpperCase()));
+                var test = this.state.ContactArray.filter(person => person.Email.toUpperCase().includes(input.toUpperCase()));
                 this.setState({ ContactArrayFiltered: test })
-                console.log('ArrayFiltered :', test)
             }
             if (this.state.filter == 'LastName') {
                 this.setState({ input: input })
-                console.log('Lastname filter')
                 var test = this.state.ContactArray.filter(person => person.Last_Name.toUpperCase().includes(input.toUpperCase()));
                 this.setState({ ContactArrayFiltered: test })
-                console.log('ArrayFiltered :', test)
             }
         }
 
@@ -159,8 +148,8 @@ class Contact extends Component {
         if (value == "FirstName") {
             this.setState({ filter: 'FirstName' })
         }
-        if (value == "LastName") {
-            this.setState({ filter: 'LastName' })
+        if (value == "email") {
+            this.setState({ filter: 'email' })
         }
     }
 
@@ -210,6 +199,7 @@ class Contact extends Component {
                 <div>
                     <h2>Contact</h2>
                     <NavBar />
+                    <NewContactButton />
                     <div id="Contactfilterbox">
                         <select className="contactfilters" onChange={(e) => this.ChangeCmdFilter(e.target.value)}>
                             <option value="empty">Statut commande</option>
@@ -218,17 +208,17 @@ class Contact extends Component {
                             <option value="expédié">Expédié</option>
                         </select>
                         <select className="contactfilters" onChange={(e) => this.ChangeFilter(e.target.value)}>
-                            <option value="FirstName">Prénom</option>
                             <option value="LastName">Nom</option>
+                            <option value="email">Email</option>
                         </select>
                         <input
-                        id = "filterinput"
-                        //style={BarStyling}
-                        key="random1"
-                        value={this.state.input}
-                        placeholder={"search name"}
-                        onChange={(e) => this.setKeyword(e.target.value)}
-                    />
+                            id="filterinput"
+                            //style={BarStyling}
+                            key="random1"
+                            value={this.state.input}
+                            placeholder={"search name"}
+                            onChange={(e) => this.setKeyword(e.target.value)}
+                        />
                     </div>
                     <table id="ContactTable">
                         <thead>
@@ -239,6 +229,7 @@ class Contact extends Component {
                                 <td>mail</td>
                                 <td>tel</td>
                                 <td>statut commande</td>
+                                <td>Date dernière activitée</td>
                             </tr>
                         </thead>
                         <PaginacionTabla

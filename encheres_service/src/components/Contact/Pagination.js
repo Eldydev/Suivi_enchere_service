@@ -49,6 +49,7 @@ const PaginacionTabla = ({ itemsperpage, nocolumns, items, pagesspan }) => {
                 <td>{contact.Email}</td>
                 <td>{contact.Phone}</td>
                 <td className={contact.avancement_cmd}>{contact.avancement_cmd}</td>
+                <td>{contact.Last_Activity_Date}</td>
                 <td className="viewbutton">
                 <Link
                   to={{

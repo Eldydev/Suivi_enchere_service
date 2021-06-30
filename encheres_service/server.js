@@ -144,10 +144,10 @@ route.post('/update-number', (req, res) => {
 });
 
 route.post('/update-status', (req, res) => {
-  const { status, id } = req.body;
+  const { status, id, date } = req.body;
   console.log('body: ', req.body);
 
-  var sql = "UPDATE mytable SET avancement_cmd = '" + status + "' WHERE id = '" + id + "'";
+  var sql = "UPDATE mytable SET avancement_cmd = '" + status + "',Last_Activity_Date = '" + date + "'  WHERE id = '" + id + "'";
   connection.query(sql, function (err, result) {
     if (err) throw err;
     console.log(result.affectedRows + " record(s) updated");
@@ -186,6 +186,72 @@ route.post('/get-mdv', (req, res) => {
     console.log(result)
     res.send({
       rows: result
+    });
+  });
+});
+
+route.post('/create-contact', (req, res) => {
+  const { nom, prénom, email, tel, société, rue, ville, cp, pays, rueadl, villeadl, cpadl, paysadl, date } = req.body;
+  console.log('body: ', req.body);
+
+  var sql = "INSERT INTO `mytable`" +
+    "(`First_Name`, `Last_Name`, `Email`," +
+    " `Phone`, `Address_Street`, `Address_City`," +
+    " `Address_State`, `Address_Zip`, `Address_Country`," +
+    " `Company`, `Labels`,`Created_At`," +
+    " `Subscription_Status`, `Last_Activity`, `Last_Activity_Date`," +
+    " `Source`, `PAYS_LIVRAISON`, `VILLE_LIVRAISON`, " +
+    "`Code_postal_LIVRAISON`, `Adresse_de_livraison`, `Date`, " +
+    "`avancement_cmd`, `Numsuivi`, `id_MDV`)" +
+    " VALUES ('" + prénom + "','" + nom + "','" + email + "','" + tel +
+    "','" + rue + "','" + ville + "','','" + cp + "','" + pays +
+    "','','','" + date + "','','','" + date +
+    "','" + paysadl + "','" + villeadl + "','" + cpadl + "','" + rueadl + "','',NULL,'','','')"
+
+  var sql2 = "INSERT INTO `mytableSave`" +
+    "(`First_Name`, `Last_Name`, `Email`," +
+    " `Phone`, `Address_Street`, `Address_City`," +
+    " `Address_State`, `Address_Zip`, `Address_Country`," +
+    " `Company`, `Labels`,`Created_At`," +
+    " `Subscription_Status`, `Last_Activity`, `Last_Activity_Date`," +
+    " `Source`, `PAYS_LIVRAISON`, `VILLE_LIVRAISON`, " +
+    "`Code_postal_LIVRAISON`, `Adresse_de_livraison`, `Date`, " +
+    "`avancement_cmd`, `Numsuivi`, `id_MDV`)" +
+    " VALUES ('" + prénom + "','" + nom + "','" + email + "','" + tel +
+    "','" + rue + "','" + ville + "','','" + cp + "','" + pays +
+    "','','','" + date + "','','','" + date +
+    "','" + paysadl + "','" + villeadl + "','" + cpadl + "','" + rueadl + "','',NULL,'','','')"
+  connection.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log(result.affectedRows + " record(s) created");
+    res.send({
+      result: 'succes'
+    });
+  });
+
+  connection.query(sql2, function (err, result) {
+    if (err) throw err;
+    console.log(result.affectedRows + " record(s) created");
+  });
+});
+
+route.post('/update-contact', (req, res) => {
+  const { nom, prénom, email, tel, société, rue, ville, cp, pays, rueadl, villeadl, cpadl, paysadl, date, id } = req.body;
+  console.log('body: ', req.body);
+
+  var sql = "UPDATE `mytable` SET" +
+    "`First_Name` = '" + prénom + "', `Last_Name` = '" + nom + "', `Email` = '" + email + "'," +
+    "`Phone` = '" + tel + "', `Company` = '" + société + "'," +
+    "`Address_Street` = '" + rue + "', `Address_City` = '" + ville + "', `Address_Zip` = '" + cp + "'," +
+    "`Address_Country` = '" + pays + "', `Adresse_de_livraison` = '" + rueadl + "', `VILLE_LIVRAISON` = '" + villeadl + "'," +
+    "`Code_postal_LIVRAISON` = '" + cpadl + "', `PAYS_LIVRAISON` = '" + paysadl + "', `Last_Activity_Date` = '" + date +
+    "' WHERE id = '" + id + "'";
+
+  connection.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log(result.affectedRows + " record(s) updated");
+    res.send({
+      result: 'succes'
     });
   });
 });
