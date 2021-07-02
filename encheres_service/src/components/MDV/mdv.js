@@ -26,6 +26,12 @@ class Mdvlist extends Component {
         })
       });
     this.MDVMapping()
+    this.SENDMDVList()
+  }
+
+  SENDMDVList() {
+    var mdvlist = this.state.MDVArray
+    return mdvlist;
   }
 
   handleMdvChange = (value) => {

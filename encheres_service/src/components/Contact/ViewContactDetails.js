@@ -23,7 +23,10 @@ class ViewContactDetails extends Component {
       mdv: [],
       numsuivi: '',
       status: '',
-      id_mdv: ''
+      id_mdv: '',
+      MDVFromChildArray: '',
+      MDVConverted: '',
+      MDVConvertedville: ''
     };
   }
 
@@ -45,9 +48,24 @@ class ViewContactDetails extends Component {
       .then(response => {
         console.log('get-mdv - Success: ', response)
         var id_mdv = response.rows[0].id_MDV
+        this.setState({ id_mdv: id_mdv })
         this.displayMDV(id_mdv)
       })
 
+
+  }
+
+  GETMDVlistFromChild = () => {
+    if (this.state.id_mdv != '') {
+      var mdv = this.refs.mdvlist.SENDMDVList();
+      this.setState({ MDVFromChildArray: mdv })
+      var parsed = parseInt(this.state.id_mdv)
+      parsed = parsed -= 1
+      var parsedmdv = mdv[parsed].nom
+      var parsedmdvVille = mdv[parsed].ville
+      this.setState({ MDVConverted: parsedmdv })
+      this.setState({ MDVConvertedville: parsedmdvVille })
+    }
 
   }
 
@@ -55,7 +73,8 @@ class ViewContactDetails extends Component {
 
     if (id !== '') {
 
-      document.getElementById('MDVlist').style.display = "none"
+      document.getElementById('MDVlist').style.display = "none";
+      this.GETMDVlistFromChild()
     }
   }
 
@@ -166,6 +185,7 @@ class ViewContactDetails extends Component {
   render() {
 
     const { state } = this.props.location
+    console.log('teeeeeeeeeeeeeeeest', this.state.MDVFromChildArray)
 
 
     return (
@@ -194,13 +214,14 @@ class ViewContactDetails extends Component {
             </div>
             <div id="ContactInfoBox4">
               <strong>Status Commande:</strong> {state.users.avancement_cmd}{" "}
+              <strong>Maison de Vente:</strong> {this.state.MDVConverted}{"  - "} {this.state.MDVConvertedville}{" "}
               <strong>date de la dernière activitée:</strong> {state.users.Last_Activity_Date}{" "}
             </div>
           </div>
         </div>
         <div id="ContactInfoBox5">
-          <div  id="ContactInfoBox6">
-            <h2>Adresse</h2>
+          <div id="ContactInfoBox6">
+            <h2>Adresse de facturation</h2>
             <div>
               <div>
                 <strong>Rue:</strong> {state.users.Address_Street}{" "}
@@ -217,7 +238,7 @@ class ViewContactDetails extends Component {
             <div>
               <div>
                 <strong>Adresse de livraison:</strong> {state.users.Adresse_de_livraison}{" "}
-                <strong>Ville de livraisone:</strong> {state.users.VILLE_LIVRAISON}{" "}
+                <strong>Ville de livraison:</strong> {state.users.VILLE_LIVRAISON}{" "}
               </div>
               <div>
                 <strong>Code postal de livraison:</strong> {state.users.Code_postal_LIVRAISON}{" "}
